@@ -8,7 +8,7 @@ export const componentsData = {
     category: "Get Started",
     image: "introImg", 
     description:
-      "Learn how to use these snippets in your React or HTML projects.",
+      "copy and paste these snippets in your React or HTML projects.",
     code: `// Welcome to UI.Snippets
 // Copy any code and paste it into your project.`,
   },
