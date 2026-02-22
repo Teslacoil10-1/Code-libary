@@ -64,7 +64,7 @@ export default function SlugPage() {
               className={`pill-btn ${showCode ? "active" : ""}`}
               onClick={() => setShowCode(true)}
             >
-              {"<>"} Code
+              {"</>"} Code
             </button>
           </div>
         </div>
