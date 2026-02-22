@@ -13,23 +13,30 @@
 .app-container {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   background-color: var(--background);
   color: var(--foreground);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
   display: flex;
   justify-content: center;
-  align-items: center;
-  overflow-x: hidden;
-  padding: 20px;
-  box-sizing: border-box;
+  align-items: center; 
 }
 
 .bg-gradient-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(148, 52, 135, 0.4) 0%, transparent 70%);
-  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(148, 52, 135, 0.5) 0%, transparent 70%);
+}
+
+.cursor-canvas, #splash-canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  pointer-events: none; 
 }
 
 .hero-content {
@@ -38,57 +45,59 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 900px;
-  width: 100%;
+  justify-content: center;
+  max-width: 800px;
   text-align: center;
-  padding: 80px 20px;
-}
-
-.title {
-  font-size: clamp(2.5rem, 8vw, 5rem);
-  font-weight: 350;
-  margin: 0;
-  line-height: 1.1;
-  font-family: "Roboto", sans-serif;
-  text-wrap: balance;
-}
-
-.subtitle {
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  color: #a1a1aa;
-  margin: 1.5rem 0 3rem 0;
-  line-height: 1.6;
-  max-width: 600px;
+  border-radius: 25px;
+  padding: 100px 50px;
+  text-wrap: nowrap;
 }
 
 .logo {
   position: absolute;
   top: 20px;
   right: 20px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
-  z-index: 20;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 10;
   text-transform: capitalize;
-  padding: 8px 16px;
+  padding: 10px 20px;
   border: 1px solid var(--border);
   border-radius: 500px;
   background: var(--glass-bg);
-  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.title {
+  font-size: 5rem;
+  font-weight: 350;
+  margin: 0;
+  line-height: 1.1;
+  font-family: "Roboto", sans-serif;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: #a1a1aa;
+  margin-top: 1.5rem;
+  margin-bottom: 3rem;
+  line-height: 1.6;
 }
 
 .cta-button.primary {
   all: unset;
   position: relative;
-  padding: 16px 40px;
+  padding: 14px 32px;
   font-family: 'Montserrat', sans-serif;
   font-size: 1rem;
   color: #ffffff;
   letter-spacing: 1px;
   cursor: pointer;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   background-color: #000000;
   z-index: 1;
+  transform-style: preserve-3d; 
   transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -98,46 +107,89 @@
   inset: -2px; 
   background: var(--cta-glow);
   background-size: 300% 100%;
-  border-radius: 14px;
-  filter: blur(15px);
+  border-radius: 10px;
+  filter: blur(20px);
   z-index: -1;
+  transform: translateZ(-1px); 
   opacity: 0;
   transition: opacity 0.4s ease;
 }
 
+.cta-button.primary:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
 .cta-button.primary:hover::before {
-  opacity: 0.7;
+  opacity: 0.8;
   animation: move-glow 3s linear infinite;
+}
+
+.cta-button.primary:active {
+  transform: scale(0.97);
 }
 
 @keyframes move-glow {
   0% { background-position: 0% 50%; }
   100% { background-position: 150% 50%; }
 }
+/* --- Responsive Design --- */
 
+/* Tablet and Smaller Desktops (Under 1024px) */
+@media (max-width: 1024px) {
+  .title {
+    font-size: 4rem;
+  }
+  
+  .hero-content {
+    padding: 60px 30px;
+    text-wrap: wrap; 
+  }
+}
 @media (max-width: 768px) {
   .app-container {
-    align-items: flex-start;
-    padding-top: 100px;
+    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden; 
+  }
+
+  .hero-content {
+    width: 90%;
+    padding: 40px 20px;
+    text-wrap: wrap;
+  }
+
+  .title {
+    font-size: 2.8rem;
+    letter-spacing: -1px;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    padding: 0 10px;
   }
 
   .logo {
-    right: 50%;
-    transform: translateX(50%);
-    white-space: nowrap;
+    position: relative; /* Moves logo into flow or keeps it top-right */
+    top: 20px;
+    right: auto;
+    margin-bottom: 2rem;
   }
 
   .cta-button.primary {
-    width: 100%;
-    max-width: 280px;
-    box-sizing: border-box;
+    padding: 12px 24px;
+    width: 80%; /* Larger tap target for fingers */
     text-align: center;
   }
 }
 
-.cursor-canvas, #splash-canvas-container {
-  position: fixed;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none; 
+/* Very Small Screens (Under 480px) */
+@media (max-width: 480px) {
+  .title {
+    font-size: 2.2rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
 }

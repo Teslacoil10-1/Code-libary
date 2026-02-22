@@ -1,21 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@900&display=swap");
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+@import url("https://fonts.googleapis.com");
 
 .layout-root {
     display: flex;
-    flex-direction: row;
     min-height: 100vh;
     background-color: #0a0a0a;
     font-family: "Open Sans", sans-serif;
     letter-spacing: 0.005em;
     -webkit-font-smoothing: antialiased;
     color: white;
-    overflow-x: hidden;
 }
 
 .sidebar {
@@ -23,10 +15,11 @@
     padding: 60px 24px;
     border-right: 1px solid rgba(255, 255, 255, 0.05);
     flex-shrink: 0;
-    transition: transform 0.3s ease;
 }
 
-.sidebar-group { margin-bottom: 32px; }
+.sidebar-group {
+    margin-bottom: 32px;
+}
 
 .sidebar-label {
     color: rgba(255, 255, 255, 0.5);
@@ -52,7 +45,9 @@
     transition: 0.2s ease;
 }
 
-.sidebar-item:hover, .sidebar-item.active { color: white; }
+.sidebar-item:hover, .sidebar-item.active {
+    color: white;
+}
 
 .sidebar-item.active {
     font-weight: 600;
@@ -62,33 +57,29 @@
 
 .slug-container {
     flex: 1;
-    padding: 60px 5%;
-    width: 100%;
+    padding: 60px 8%;
+    max-width: 1200px;
 }
 
 .main-title {
     font-family: "Roboto", sans-serif;
-    font-size: clamp(2.2rem, 6vw, 3.5rem);
+    font-size: 3.5rem;
     font-weight: 900;
     margin-bottom: 16px;
-    letter-spacing: -0.04em;
-    line-height: 1.1;
+    letter-spacing: -1.5px;
 }
 
 .sub-description {
-    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    font-size: 1.05rem;
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 40px;
     line-height: 1.6;
-    max-width: 800px;
 }
 
 .button-row {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    gap: 16px;
     margin-bottom: 24px;
 }
 
@@ -104,12 +95,11 @@
     background: transparent;
     border: none;
     color: rgba(255, 255, 255, 0.6);
-    padding: 8px 16px;
+    padding: 8px 20px;
     border-radius: 100px;
     cursor: pointer;
     font-size: 0.85rem;
     transition: 0.3s;
-    white-space: nowrap;
 }
 
 .pill-btn.active {
@@ -120,11 +110,17 @@
 .glass-frame {
     position: relative;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: clamp(16px, 4vw, 28px);
+    border-radius: 28px;
     background: rgba(255, 255, 255, 0.02);
     backdrop-filter: blur(12px);
     overflow: hidden;
-    min-height: 400px;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-area {
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
@@ -133,71 +129,148 @@
     flex: 1;
     position: relative;
     width: 100%;
+    min-height: 450px;
 }
 
 .preview-img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
 .copy-floating-btn, #back-button {
-    background: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: white;
-    padding: 8px 16px;
+    padding: 6px 14px;
     border-radius: 8px;
     font-size: 0.8rem;
     cursor: pointer;
     z-index: 20;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(4px);
+    transition: 0.2s;
 }
 
-@media (max-width: 900px) {
+.copy-floating-btn {
+    top: 20px;
+    right: 20px;
+}
+#back-button {
+    top: 20px;
+    right: 20px;
+    border-radius: 20px;
+    scale: 1.2;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.copy-floating-btn:hover, #back-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+/* --- Responsive Logic --- */
+
+/* Tablets (iPad, etc.) */
+@media (max-width: 1024px) {
+    .slug-container {
+        padding: 40px 4%;
+    }
+    
+    .main-title {
+        font-size: 2.8rem;
+    }
+}
+
+/* Mobile Devices (Phones) */
+@media (max-width: 768px) {
     .layout-root {
-        flex-direction: column;
+        flex-direction: column; /* Move sidebar to the top */
     }
 
     .sidebar {
         width: 100%;
-        padding: 24px 5%;
+        padding: 30px 20px;
         border-right: none;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .sidebar-line-wrapper {
+        flex-direction: row; /* Horizontal scrolling or wrapping menu */
+        overflow-x: auto;
+        gap: 8px;
+        border-left: none;
+        margin-left: 0;
+        padding-bottom: 10px;
+        /* Hide scrollbar for a cleaner look */
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    
+    .sidebar-line-wrapper::-webkit-scrollbar {
         display: none;
     }
 
-    .sidebar.mobile-open {
-        display: block;
+    .sidebar-item {
+        white-space: nowrap; /* Prevent text from breaking */
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 6px;
+        padding: 6px 14px;
+    }
+
+    .sidebar-item.active {
+        border-left: none;
+        border-bottom: 2px solid white;
+        margin-left: 0;
     }
 
     .slug-container {
-        padding: 40px 20px;
+        padding: 32px 20px;
     }
 
-    .glass-frame {
-        min-height: 350px;
+    .main-title {
+        font-size: 2.2rem;
+        letter-spacing: -1px;
     }
-}
 
-@media (max-width: 480px) {
     .button-row {
-        flex-direction: column;
+        flex-direction: column; /* Stack the Title/Label and the Toggle Pill */
         align-items: flex-start;
+        gap: 16px;
     }
 
     .toggle-pill-container {
         width: 100%;
-        justify-content: space-between;
+        justify-content: center;
     }
 
     .pill-btn {
-        flex: 1;
+        flex: 1; /* Make buttons even width on mobile */
         text-align: center;
     }
 
-    .copy-floating-btn {
-        top: auto;
-        bottom: 20px;
-        right: 20px;
+    .glass-frame {
+        min-height: 300px; /* Shrink height so it fits on small screens */
+    }
+
+    .preview-mode {
+        min-height: 300px;
+    }
+}
+
+/* Extra Small Phones */
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 1.8rem;
+    }
+    
+    .sub-description {
+        font-size: 0.95rem;
     }
 }
