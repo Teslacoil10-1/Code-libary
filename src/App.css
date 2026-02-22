@@ -1,16 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wdth,wght@0,75,900;1,75,900&display=swap');
 
-/* 1. LOCK THE ROOT */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: fixed; /* This is the "nuclear option" for mobile */
-  overscroll-behavior: none; /* Stops pull-to-refresh */
-}
-
 :root {
   --background: #09090b;
   --foreground: #fafafa;
@@ -21,19 +10,26 @@ html, body {
   --cta-glow: linear-gradient(90deg, #6366f1, #a855f7, #ec4899, #6366f1);
 }
 
+/* 1. LOCK THE CONTAINER (Landing Page Only) */
 .app-container {
-  position: relative;
+  position: fixed; /* Fixes it to the viewport */
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100vh;
-  height: 100dvh; /* Adapts to mobile URL bars */
+  height: 100dvh; /* Dynamic height for mobile toolbars */
   background-color: var(--background);
   color: var(--foreground);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden;
+  
+  /* The "No-Scroll" Nuclear Trio */
+  overflow: hidden; 
+  touch-action: none; 
+  overscroll-behavior: none;
+
   display: flex;
   justify-content: center;
   align-items: center; 
-  touch-action: none; /* Stops all touch-based scrolling gestures */
+  z-index: 1;
 }
 
 .bg-gradient-overlay {
@@ -61,8 +57,7 @@ html, body {
   justify-content: center;
   max-width: 800px;
   text-align: center;
-  border-radius: 25px;
-  padding: 100px 50px;
+  padding: 20px; /* Reduced to ensure it fits mobile screens */
 }
 
 .logo {
@@ -149,33 +144,28 @@ html, body {
 
 @media (max-width: 1024px) {
   .title { font-size: 4rem; }
-  .hero-content { padding: 60px 30px; }
 }
 
 @media (max-width: 768px) {
-  .app-container {
-    height: 100dvh;
-  }
-  .hero-content {
-    width: 90%;
-    padding: 40px 20px;
-  }
   .title {
     font-size: 2.8rem;
     letter-spacing: -1px;
   }
+
   .subtitle {
     font-size: 1.1rem;
     margin-bottom: 2rem;
   }
+
   .logo {
-    position: relative;
+    position: absolute; /* Keep it pinned to top even on mobile */
     top: 20px;
-    margin-bottom: 2rem;
   }
+
   .cta-button.primary {
     padding: 12px 24px;
-    width: 80%;
+    width: auto; /* Buttons feel better when they aren't full width on tiny screens */
+    min-width: 180px;
     text-align: center;
   }
 }
